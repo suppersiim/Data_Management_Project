@@ -22,11 +22,12 @@ class Server(BaseHTTPRequestHandler):
             form = urllib.parse.parse_qs(data)
 
             full_name = form.get("full_name", [""])[0]
+            first_name, last_name = full_name.split(" ")
             email = form.get("email", [""])[0]
             experience = form.get("experience", [""])[0]
             tech_stack = form.get("tech_stack", [""])[0]
             duration = form.get("duration", [""])[0]
-            skills = form.get("skills", [""])[0]
+            skills = form.get("additional_skills", [""])[0]
             projects = form.get("projects", [])
             availability = form.get("availability", ["no"])[0]
 
