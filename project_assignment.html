@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Assignment Form</title>
 </head>
 <body>
@@ -13,16 +15,18 @@
 
 <br />
 
-Full Name: <input type="text" name="full_name" required>
+<label for="full_name">Full Name:</label>
+<input type="text" id="full_name" name="full_name" required>
 
 <br /><br />
 
-Email Address: <input type="text" name="email" required>
+<label for="email">Email Address:</label>
+<input type="email" id="email" name="email" required>
 
 <br /><br />
 
-Experience Level:
-<select name="experience" required>
+<label for="experience">Years of Experience:</label>
+<select id="experience" name="experience" required>
     <option value="">Select your level</option>
     <option value="junior">Junior (0-2 years)</option>
     <option value="mid">Mid-level (2-5 years)</option>
@@ -31,8 +35,8 @@ Experience Level:
 
 <br /><br />
 
-Primary Technology Stack:
-<select name="tech_stack" required>
+<label for="tech_stack">Primary Technology Stack:</label>
+<select id="tech_stack" name="tech_stack" required>
     <option value="">Choose one</option>
     <option value="backend">Backend Development</option>
     <option value="frontend">Frontend Development</option>
@@ -44,40 +48,35 @@ Primary Technology Stack:
 
 <br /><br />
 
-Available Projects:
-<select multiple size="8" name="projects">
-    <option value="1">Customer Portal Redesign</option>
-    <option value="2">Data Pipeline Migration</option>
-    <option value="3">Mobile App Enhancement</option>
-    <option value="4">Internal Analytics Dashboard</option>
-    <option value="5">API Gateway Implementation</option>
-    <option value="6">Cloud Infrastructure Setup</option>
-    <option value="7">E-commerce Platform Update</option>
-    <option value="8">Reporting System Automation</option>
-    <option value="9">Microservices Architecture Transition</option>
-    <option value="10">Customer Data Platform Integration</option>
+
+<label for="projects">Available Projects:</label>
+<select id="projects" multiple size="8" name="projects" required>
+    {% for project in projects %}
+    <option value="{{ project.id }}">{{ project.name }}</option>
+    {% endfor %}
 </select>
 
 <br /><br />
 
-Preferred Project Duration:
-<input type="radio" value="short" name="duration" required> Short-term (1-3 months)
-<input type="radio" value="medium" name="duration" required> Medium-term (3-6 months)
-<input type="radio" value="long" name="duration" required> Long-term (6+ months)
+<label for="duration">Preferred Project Duration:</label><br>
+<input type="radio" id="short" value="short" name="duration" required> <label for="short">Short-term (1-3 months)</label>
+<input type="radio" id="medium" value="medium" name="duration" > <label for="medium">Medium-term (3-6 months)</label>
+<input type="radio" id="long" value="long" name="duration" > <label for="long">Long-term (6+ months)</label>
 
 <br /><br />
 
-Additional Skills (optional):
-<input type="text" placeholder="e.g., Python, Docker, React" name="additional_skills" required>
+<label for="additional_skills">Additional Skills (optional):</label>
+<input type="text" id="additional_skills" placeholder="e.g., Python, Docker, React" name="additional_skills">
 
 <br /><br />
 
-<input type="checkbox" name="availability" value="yes"> I confirm my availability for the selected projects
+<label for="availability">Availability:</label>
+<input type="checkbox" id="availability" name="availability" value="yes" required> I confirm my availability for the selected projects
 
 <br /><br />
 
-<input type="submit" value="Save Profile" method="post" action="/submit_profile">
-<input type="reset" value="Clear Form" method="post" action="/clear_form">
+<input type="submit" value="Save Profile">
+<input type="reset" value="Clear Form">
 
 </form>
 
