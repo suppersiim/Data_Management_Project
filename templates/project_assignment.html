@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Assignment Form</title>
+</head>
+<body>
+
+<h2>Project Assignment Form</h2>
+
+<!-- ── SUCCESS MESSAGE ── -->
+{% if message %}
+    <p style="color: green;">{{ message }}</p>
+{% endif %}
+
+<!-- ── ERROR MESSAGES ── -->
+{% if errors %}
+    <ul style="color: red;">
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form action="/submit_profile" method="POST">
+
+    <p>Complete your profile to get assigned to internal projects.</p>
+
+    <br />
+
+    <label for="full_name">Full Name:</label>
+    <input type="text" id="full_name" name="full_name" required
+        value="{{ (form_data.first_name ~ ' ' ~ form_data.last_name) if form_data else '' }}">
+
+    <br /><br />
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required
+        value="{{ form_data.email_address if form_data else '' }}">
+
+    <br /><br />
+
+    <label for="experience">Experience Level:</label>
+    <select id="experience" name="experience" required>
+        <option value="">Select your level</option>
+        <option value="junior" {{ 'selected' if form_data and form_data.experience_level == 'junior' }}>Junior (0-2 years)</option>
+        <option value="mid"    {{ 'selected' if form_data and form_data.experience_level == 'mid' }}>Mid-level (2-5 years)</option>
+        <option value="senior" {{ 'selected' if form_data and form_data.experience_level == 'senior' }}>Senior (5+ years)</option>
+    </select>
+
+    <br /><br />
+
+    <label for="tech_stack">Primary Technology Stack:</label>
+    <select id="tech_stack" name="tech_stack" required>
+        <option value="">Choose one</option>
+        <option value="backend"   {{ 'selected' if form_data and form_data.primary_technology_stack == 'backend' }}>Backend Development</option>
+        <option value="frontend"  {{ 'selected' if form_data and form_data.primary_technology_stack == 'frontend' }}>Frontend Development</option>
+        <option value="fullstack" {{ 'selected' if form_data and form_data.primary_technology_stack == 'fullstack' }}>Full-Stack Development</option>
+        <option value="data"      {{ 'selected' if form_data and form_data.primary_technology_stack == 'data' }}>Data Engineering</option>
+        <option value="devops"    {{ 'selected' if form_data and form_data.primary_technology_stack == 'devops' }}>DevOps</option>
+        <option value="mobile"    {{ 'selected' if form_data and form_data.primary_technology_stack == 'mobile' }}>Mobile Development</option>
+    </select>
+
+    <br /><br />
+
+    <label for="projects">Available Projects:</label>
+    <select id="projects" multiple size="8" name="projects" required>
+        {% for project in projects %}
+        <option value="{{ project.project_id }}"
+            {{ 'selected' if selected_projects and (project.project_id | string) in selected_projects }}>
+            {{ project.project_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <br /><br />
+
+    <label>Preferred Project Duration:</label><br>
+    <input type="radio" id="short" value="short" name="duration" required
+        {{ 'checked' if form_data and form_data.preferred_project_duration == 'short' }}>
+    <label for="short">Short-term (1-3 months)</label>
+
+    <input type="radio" id="medium" value="medium" name="duration"
+        {{ 'checked' if form_data and form_data.preferred_project_duration == 'medium' }}>
+    <label for="medium">Medium-term (3-6 months)</label>
+
+    <input type="radio" id="long" value="long" name="duration"
+        {{ 'checked' if form_data and form_data.preferred_project_duration == 'long' }}>
+    <label for="long">Long-term (6+ months)</label>
+
+    <br /><br />
+
+    <label for="additional_skills">Additional Skills (optional):</label>
+    <input type="text" id="additional_skills" name="additional_skills"
+        placeholder="e.g., Python, Docker, React"
+        value="{{ form_data.additional_skills if form_data and form_data.additional_skills else '' }}">
+
+    <br /><br />
+
+    <input type="checkbox" id="availability" name="availability" value="yes" required
+        {{ 'checked' if form_data and form_data.confirmed_availability }}>
+    <label for="availability">I confirm my availability for the selected projects</label>
+
+    <br /><br />
+
+    <input type="submit" value="Save Profile">
+    <input type="reset" value="Clear Form">
+
+</form>
+
+</body>
+</html>
