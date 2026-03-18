@@ -1,13 +1,14 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
+import config
 
 # CONNECTION SETUP
 def get_connection():
     return psycopg2.connect(
-        host="localhost",
-        database="employee_projects_db",
-        user="postgres",
-        password="postgres" 
+        host=config.DB_HOST,
+        database=config.DB_NAME,
+        user=config.DB_USER,
+        password=config.DB_PASSWORD 
     )
 
 
